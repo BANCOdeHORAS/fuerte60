@@ -114,6 +114,9 @@ nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surfa
 nav.tabs a{display:grid;justify-items:center;align-content:center;gap:3px;height:var(--nav-h);text-decoration:none;color:var(--muted);font-size:.72rem;font-weight:700}
 nav.tabs a svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 nav.tabs a[aria-current="page"]{color:var(--accent)}
+.install{border-color:var(--accent)}
+.install-row{display:flex;gap:12px;align-items:center}
+.install-row img{border-radius:10px;flex:none}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 12px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:.9rem;z-index:7}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -124,6 +127,16 @@ nav.tabs a[aria-current="page"]{color:var(--accent)}
 <main>
 <!-- HOY -->
 <section class="view" id="v-hoy">
+  <div class="panel install" id="install" hidden>
+    <div class="install-row">
+      <img src="icon-192.png" alt="" width="44" height="44">
+      <div><h3>Instala Fuerte 60</h3><p class="muted small" id="install-txt"></p></div>
+    </div>
+    <div class="row">
+      <button class="btn" id="install-btn" type="button" hidden>Instalar app</button>
+      <button class="btn ghost" id="install-close" type="button">Ahora no</button>
+    </div>
+  </div>
   <div class="panel">
     <div class="summary">
       <svg class="ring" viewBox="0 0 80 80" aria-hidden="true"><circle class="bg" cx="40" cy="40" r="32"/><circle class="fg" id="ring" cx="40" cy="40" r="32" transform="rotate(-90 40 40)" stroke-dasharray="201.06" stroke-dashoffset="201.06"/><text id="ring-t" x="40" y="47" text-anchor="middle">0</text></svg>
@@ -209,7 +222,7 @@ nav.tabs a[aria-current="page"]{color:var(--accent)}
 </nav>
 
 <script>
-const VERSION="1.0";
+const VERSION="1.1";
 const VID="https://www.youtube.com/watch?v=amzSc6TNtnA&t=";
 const DAILY=[
   {k:"fuerza",t:"Fuerza · 10 min por la mañana",s:"Silla arriba y abajo, flexiones contra la pared, remo con banda o botellas."},
@@ -409,6 +422,35 @@ renderAll(); route();
 document.addEventListener("visibilitychange",()=>{if(!document.hidden) renderDaily()});
 
 if("serviceWorker" in navigator){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+
+/* instalación */
+const ua=navigator.userAgent;
+const isIOS=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const isChromeIOS=/CriOS/.test(ua);
+const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+let deferred=null, hideInstall=false;
+try{hideInstall=localStorage.getItem("fuerte60-noinstall")==="1"}catch(e){}
+function showInstall(){
+  if(standalone||hideInstall) return;
+  const t=$("install-txt"), b=$("install-btn");
+  if(deferred){ t.textContent="Tenla como una app más, con su icono y sin conexión."; b.hidden=false; }
+  else if(isIOS&&isChromeIOS){ t.textContent="En Chrome del iPhone: pulsa el botón Compartir (arriba a la derecha, junto a la dirección) y elige «Añadir a pantalla de inicio»."; b.hidden=true; }
+  else if(isIOS){ t.textContent="En Safari: pulsa Compartir (el cuadrado con la flecha) y elige «Añadir a pantalla de inicio»."; b.hidden=true; }
+  else { t.textContent="En Chrome: abre el menú ⋮ (arriba a la derecha) y elige «Instalar Fuerte 60» o «Añadir a pantalla de inicio»."; b.hidden=true; }
+  $("install").hidden=false;
+}
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;showInstall()});
+$("install-btn").addEventListener("click",async()=>{
+  if(!deferred) return;
+  deferred.prompt();
+  const r=await deferred.userChoice.catch(()=>null);
+  deferred=null;
+  if(r&&r.outcome==="accepted"){$("install").hidden=true;toast("Instalada")}
+  else showInstall();
+});
+$("install-close").addEventListener("click",()=>{$("install").hidden=true;try{localStorage.setItem("fuerte60-noinstall","1")}catch(e){}});
+addEventListener("appinstalled",()=>{$("install").hidden=true});
+setTimeout(showInstall,1500);
 </script>
 </body>
 </html>

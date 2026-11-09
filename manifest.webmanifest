@@ -3,6 +3,7 @@
   "short_name": "Fuerte 60",
   "description": "Las 10 claves para mantenerte fuerte después de los 60, convertidas en hábitos diarios.",
   "lang": "es",
+  "id": "./",
   "start_url": "./#hoy",
   "scope": "./",
   "display": "standalone",
