@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fuerte 60</title>
+<meta name="description" content="Las 10 claves para mantenerte fuerte después de los 60, convertidas en hábitos diarios.">
+<meta name="theme-color" content="#1E6B57" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1513" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Fuerte 60">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F3F6F4; --surface:#FFFFFF; --line:#D5DED9; --fg:#18241F; --muted:#56655F;
+  --accent:#1E6B57; --on-accent:#FFFFFF; --accent-soft:#DCEDE6; --battle:#B9790C; --battle-soft:#FBEFD6; --warn:#8A4B12;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --nav-h:64px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0E1513; --surface:#16201D; --line:#2B3833; --fg:#E4ECE8; --muted:#9BABA4;
+  --accent:#62C4A6; --on-accent:#0E1513; --accent-soft:#1D3730; --battle:#E8B34B; --battle-soft:#3A2E16; --warn:#F0B27A; color-scheme:dark}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:17px/1.5 var(--f-body);-webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent}
+.topbar{position:sticky;top:0;z-index:5;background:var(--bg);
+  padding:calc(env(safe-area-inset-top,0px) + 12px) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));
+  border-bottom:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.topbar h1{font:700 1.35rem/1.1 var(--f-display);margin:0}
+.topbar span{font-size:.85rem;color:var(--muted)}
+main{max-width:720px;margin:0 auto;
+  padding:18px max(16px,env(safe-area-inset-right,0px)) calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 28px) max(16px,env(safe-area-inset-left,0px))}
+.view{display:grid;gap:18px}
+h2,h3{font-family:var(--f-display);margin:0;line-height:1.15;text-wrap:balance}
+h2{font-size:1.5rem} h3{font-size:1.1rem}
+p{margin:0}
+a{color:var(--accent)}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:700}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px}
+.note{border-left:3px solid var(--warn);padding:10px 12px;background:var(--surface);font-size:.9rem;color:var(--muted);border-radius:0 8px 8px 0}
+.note b{color:var(--fg)}
+
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.chk{display:flex;gap:14px;align-items:flex-start;padding:10px 6px;border-radius:8px;cursor:pointer;min-height:48px}
+.chk:active{background:var(--accent-soft)}
+.chk input{width:26px;height:26px;margin:1px 0 0;accent-color:var(--accent);flex:none}
+.chk span{min-width:0}
+.chk small{display:block;color:var(--muted);font-size:.86rem}
+.chk input:checked + span b{text-decoration:line-through;text-decoration-color:var(--accent);color:var(--muted)}
+
+.summary{display:flex;align-items:center;gap:16px}
+.ring{width:72px;height:72px;flex:none}
+.ring circle{fill:none;stroke-width:8}
+.ring .bg{stroke:var(--line)} .ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .3s}
+.ring text{fill:var(--fg);font:700 20px var(--f-display)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day{display:grid;gap:3px;justify-items:center;font-size:.75rem;color:var(--muted)}
+.bar{width:100%;height:56px;background:var(--bg);border:1px solid var(--line);border-radius:4px;display:flex;align-items:flex-end;overflow:hidden}
+.bar i{display:block;width:100%;background:var(--accent)}
+.day.is-today{color:var(--fg);font-weight:700}
+
+label.f{display:grid;gap:6px;font-weight:700}
+input[type=number],select,textarea{font:inherit;font-size:16px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;max-width:100%}
+input[type=number]{width:8em}
+select{width:100%}
+textarea{width:100%;resize:vertical}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.out div{display:grid;gap:2px}
+.out .v{font:700 1.35rem var(--f-display);font-variant-numeric:tabular-nums}
+.evalgrid{display:grid;gap:16px}
+.evalgrid label{display:grid;gap:6px}
+.evalgrid .q{font-weight:700}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:1.8em 1fr;gap:8px;counter-increment:s}
+.steps li::before{content:counter(s);font:700 1.25rem var(--f-display);color:var(--accent)}
+.steps li.off::before{color:var(--muted)}
+
+.pillars{display:grid;gap:10px}
+details.pil{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+details.pil.is-battle{border-color:var(--battle);box-shadow:inset 4px 0 0 var(--battle)}
+details.pil summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:2em minmax(0,1fr) auto;gap:10px;align-items:center;padding:14px 14px;min-height:56px}
+details.pil summary::-webkit-details-marker{display:none}
+.num{font:700 1.4rem var(--f-display);color:var(--accent)}
+.is-battle .num{color:var(--battle)}
+.sum-t{display:grid;gap:2px;min-width:0}
+.sum-t small{color:var(--muted);font-size:.88rem}
+.prog{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--battle-soft);color:var(--battle);padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.pil-body{padding:0 14px 16px;display:grid;gap:12px}
+.pil-body ul.idea{margin:0;padding-left:1.1em;display:grid;gap:6px}
+.warn{font-size:.9rem;color:var(--warn)}
+.btn{font:700 1rem var(--f-body);border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);border-radius:10px;padding:12px 16px;min-height:48px;cursor:pointer;text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn.ghost{background:transparent;color:var(--accent)}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(5,1fr);
+  padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+nav.tabs a{display:grid;justify-items:center;align-content:center;gap:3px;height:var(--nav-h);text-decoration:none;color:var(--muted);font-size:.72rem;font-weight:700}
+nav.tabs a svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs a[aria-current="page"]{color:var(--accent)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 12px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:.9rem;z-index:7}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="topbar"><h1>Fuerte 60</h1><span id="fecha"></span></header>
+
+<main>
+<!-- HOY -->
+<section class="view" id="v-hoy">
+  <div class="panel">
+    <div class="summary">
+      <svg class="ring" viewBox="0 0 80 80" aria-hidden="true"><circle class="bg" cx="40" cy="40" r="32"/><circle class="fg" id="ring" cx="40" cy="40" r="32" transform="rotate(-90 40 40)" stroke-dasharray="201.06" stroke-dashoffset="201.06"/><text id="ring-t" x="40" y="47" text-anchor="middle">0</text></svg>
+      <div><h2>Rutina de hoy</h2><p class="muted small" id="streak"></p></div>
+    </div>
+    <div class="week" id="week" aria-label="Hábitos de los últimos 7 días"></div>
+  </div>
+  <div class="panel"><ul class="checks" id="daily"></ul></div>
+  <p class="muted small">Frecuencia antes que intensidad: bloques cortos repartidos en el día rinden más que una hora tres veces por semana.</p>
+</section>
+
+<!-- EMPEZAR -->
+<section class="view" id="v-empezar" hidden>
+  <h2>El primer mes</h2>
+  <p class="muted">Querer cambiarlo todo a la vez lleva al agobio y al abandono. Durante cuatro semanas, solo esto:</p>
+  <ol class="steps">
+    <li><div><h3>Evalúa dónde estás, sin juzgarte</h3><p class="muted small">Es tu foto de partida para compararla dentro de 6 meses.</p></div></li>
+    <li><div><h3>Elige tu primera batalla</h3><p class="muted small">Una sola clave para este mes.</p></div></li>
+    <li class="off"><div><h3>Tercer paso</h3><p class="muted small">La grabación termina antes de que lo diga.</p></div></li>
+  </ol>
+  <div class="panel"><h3>Tu autoevaluación</h3><div class="evalgrid" id="eval"></div><p class="muted small" id="eval-date"></p></div>
+  <div class="panel">
+    <h3>Tu primera batalla</h3>
+    <select id="battle-sel" aria-label="Pilar elegido"><option value="">— Sin elegir —</option></select>
+    <p class="muted small" id="battle-hint"></p>
+  </div>
+</section>
+
+<!-- PROTEÍNA -->
+<section class="view" id="v-proteina" hidden>
+  <h2>Proteína diaria</h2>
+  <p class="muted">De 1,2 a 1,6 g por kilo de peso al día, repartidos en 3 o 4 comidas de 20 a 30 g.</p>
+  <div class="panel">
+    <label class="f" for="peso">Tu peso (kg)<input type="number" id="peso" min="35" max="200" step="0.5" inputmode="decimal"></label>
+    <div class="out">
+      <div><span class="eyebrow">Al día</span><span class="v" id="p-dia">—</span></div>
+      <div><span class="eyebrow">× 4 comidas</span><span class="v" id="p-4">—</span></div>
+      <div><span class="eyebrow">× 3 comidas</span><span class="v" id="p-3">—</span></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Fuentes económicas</h3>
+    <p class="muted small">Huevos, atún en lata, lentejas con arroz, yogur griego y muslos de pollo. Referencia aproximada (no del vídeo): un huevo, unos 6 g; una lata pequeña de atún, unos 20 g; un yogur griego natural de 125 g, entre 8 y 12 g según la marca.</p>
+  </div>
+  <p class="note"><b>Ojo:</b> con enfermedad renal, pregunta a tu médico antes de subir la proteína.</p>
+</section>
+
+<!-- PILARES -->
+<section class="view" id="v-pilares" hidden>
+  <h2>Los 10 pilares</h2>
+  <p class="muted">Se apoyan unos en otros. Abre cada uno, marca lo que ya has incorporado y escucha de nuevo esa parte desde el minuto indicado.</p>
+  <div class="pillars" id="pillars"></div>
+</section>
+
+<!-- MÁS -->
+<section class="view" id="v-mas" hidden>
+  <h2>Sobre la app</h2>
+  <div class="panel">
+    <h3>De dónde sale</h3>
+    <p class="small">Resumen práctico del vídeo «Estas únicas 10 claves te mantienen fuerte y feliz después de los 60» (canal Mente Despierta, 53 min).</p>
+    <a class="btn ghost" href="https://www.youtube.com/watch?v=amzSc6TNtnA" target="_blank" rel="noopener">Abrir el vídeo</a>
+  </div>
+  <p class="note"><b>Antes de seguir las pautas.</b> El vídeo usa el nombre de Mario Alonso Puig, pero no es seguro que sea suyo, y algunas cifras se dan sin fuente. Con enfermedad renal, osteoporosis avanzada, problemas cardiacos o medicación crónica, consulta con tu médico antes de subir la proteína, el impacto o los suplementos.</p>
+  <div class="panel">
+    <h3>Tus datos</h3>
+    <p class="small muted">Se guardan solo en este móvil. Si lo cambias o borras los datos del navegador, se pierden: haz una copia de vez en cuando.</p>
+    <div class="row">
+      <button class="btn" id="exp" type="button">Guardar copia</button>
+      <label class="btn ghost" for="imp">Restaurar copia</label>
+      <input type="file" id="imp" accept="application/json,.json" hidden>
+    </div>
+  </div>
+  <p class="muted small" id="ver"></p>
+</section>
+</main>
+
+<nav class="tabs" aria-label="Secciones">
+  <a href="#hoy" data-v="hoy"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>Hoy</a>
+  <a href="#pilares" data-v="pilares"><svg viewBox="0 0 24 24"><path d="M5 20V9M10 20V5M15 20v-8M20 20V8M3 20h18"/></svg>Pilares</a>
+  <a href="#empezar" data-v="empezar"><svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>Empezar</a>
+  <a href="#proteina" data-v="proteina"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="13" rx="7" ry="8"/><path d="M12 9v4"/></svg>Proteína</a>
+  <a href="#mas" data-v="mas"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Más</a>
+</nav>
+
+<script>
+const VERSION="1.0";
+const VID="https://www.youtube.com/watch?v=amzSc6TNtnA&t=";
+const DAILY=[
+  {k:"fuerza",t:"Fuerza · 10 min por la mañana",s:"Silla arriba y abajo, flexiones contra la pared, remo con banda o botellas."},
+  {k:"estira",t:"Estiramientos · 5 min a mediodía",s:"Con el cuerpo caliente, 30 s cada postura respirando hondo."},
+  {k:"equil",t:"Equilibrio · 10 min por la tarde",s:"Paso talón-punta en línea, levantarte y quedarte a un pie."},
+  {k:"dientes",t:"Un pie al cepillarte los dientes",s:"30 s con cada pie. Apoyo cerca si lo necesitas."},
+  {k:"prote",t:"Proteína en cada comida",s:"3–4 tomas de 20–30 g."},
+  {k:"luz",t:"Luz natural por la mañana",s:"Sal un rato fuera; mejora el sueño de esa noche."},
+  {k:"nuevo",t:"Algo nuevo para el cerebro",s:"Otra ruta, idioma, instrumento o la mano no dominante."},
+  {k:"intencion",t:"Intención del día",s:"Qué hará que hoy tenga sentido."}
+];
+const P=[
+ {n:1,t:"Tu músculo es tu moneda de vida",s:"Fuerza con resistencia, no solo caminar",ts:302,m:"05:02",
+  idea:["El músculo regula el azúcar en sangre, mantiene el metabolismo y protege las articulaciones.","Es la reserva del cuerpo ante una infección o una operación, y la mejor protección contra las caídas.","Caminar no basta: hace falta resistencia progresiva. El vídeo cita estudios en los que personas de 80 y 90 años duplicaron su fuerza en 12 semanas."],
+  acc:["Hacer fuerza al menos 10 minutos casi todos los días (bandas, botellas o tu propio peso)","Subir poco a poco: más repeticiones o algo más de carga cada semana o dos","Levantarte de la silla sin apoyar las manos"],
+  warn:"La cifra de pérdida anual del vídeo se oye confusa. Como referencia general (no del vídeo), se suele estimar un 3–8 % de masa muscular por década desde los 30, más rápido después de los 60."},
+ {n:2,t:"La proteína es tu escudo invisible",s:"1,2–1,6 g por kilo, repartida en el día",ts:501,m:"08:21",
+  idea:["Con la edad el músculo cuesta más de construir (resistencia anabólica): hace falta más proteína, no menos.","Lo habitual es lo contrario: menos huevo, carne o pescado y más pan, arroz y harinas.","La proteína también sostiene las defensas, las hormonas, la piel y la cicatrización."],
+  acc:["Calcular tu objetivo en la pestaña Proteína","Poner una fuente de proteína en desayuno, comida y cena","Tener a mano opciones baratas: huevos, atún en lata, legumbres con arroz, yogur griego"],
+  warn:"Con enfermedad renal, pregunta a tu médico antes de subir la proteína."},
+ {n:3,t:"El movimiento es medicina, pero no cualquiera",s:"Variado, funcional y repartido en el día",ts:695,m:"11:35",
+  idea:["Caminar ayuda a la circulación y al ánimo, pero no fortalece hueso ni músculo de forma significativa.","El cuerpo necesita agacharse, alcanzar, girar, empujar y tirar. Lo que no se usa se pierde.","La frecuencia pesa más que la intensidad, y moverse con coordinación también protege el cerebro."],
+  acc:["Practicar agacharte y levantarte del suelo","Cargar tú las bolsas de la compra y subir escaleras cuando puedas","Repartir el ejercicio: 10 min mañana, 5 min mediodía, 10 min tarde"]},
+ {n:4,t:"Tu equilibrio es tu seguro de vida",s:"10 minutos diarios para no caerte",ts:927,m:"15:27",
+  idea:["Las caídas son la principal causa de muerte accidental a partir de los 65, y suelen deberse a un equilibrio que ya no compensa.","Una fractura de cadera supone meses de inmovilidad, pérdida de músculo y riesgo de neumonía.","Se entrena a cualquier edad, y devuelve la confianza para moverse sin miedo."],
+  acc:["Un pie mientras te cepillas los dientes, 30 s por pie, todos los días","Cuando lo domines, con los ojos cerrados y un apoyo cerca","Caminar en línea recta poniendo un pie justo delante del otro"]},
+ {n:5,t:"Tu flexibilidad es tu libertad de movimiento",s:"Se pierde por desuso y se recupera",ts:1158,m:"19:18",
+  idea:["La rigidez llega por dejar de usar el rango de movimiento; el mundo se va haciendo pequeño sin darte cuenta.","Muchos dolores de espalda, cadera u hombro vienen de tejidos acortados que tiran en mala dirección.","El objetivo no es el yoga avanzado, sino conservar los movimientos básicos."],
+  acc:["Estirar después de moverte, 30 s por postura respirando hondo","Comprobar que puedes ponerte en cuclillas, rotar la columna, subir los brazos del todo y girar el cuello","Repetir a diario: se gana milímetro a milímetro"]},
+ {n:6,t:"Tus huesos necesitan presión, no solo calcio",s:"Carga e impacto moderado",ts:1388,m:"23:08",
+  idea:["El hueso es tejido vivo que se refuerza con carga; sin ella se vuelve poroso aunque tomes calcio.","El calcio es el ladrillo y el ejercicio con carga es el albañil.","Intervienen también la vitamina D, la vitamina K2, el magnesio y la proteína."],
+  acc:["Subir escaleras en lugar de caminar solo en llano","Sentadillas, zancadas o levantarte y sentarte de la silla en series","Añadir impacto suave: paso rápido y firme, bailar, pequeños saltos si tu estado lo permite"],
+  warn:"Con osteoporosis severa, pide a un profesional que te indique qué ejercicios son seguros."},
+ {n:7,t:"Tu cerebro también necesita ejercicio",s:"Novedad, reto y vida social",ts:1650,m:"27:30",
+  idea:["El cerebro sigue creando conexiones nuevas (neuroplasticidad) incluso a los 80 o 90 años.","Las rutinas cómodas lo apagan; repetir lo que ya dominas no basta.","Necesita también ejercicio, grasas saludables, agua, buen sueño y relaciones. El estrés crónico daña la memoria."],
+  acc:["Aprender algo nuevo: idioma, instrumento, una habilidad manual o una tecnología","Cambiar a veces la ruta del paseo o usar la mano no dominante","Tener conversaciones de verdad con otras personas cada semana"]},
+ {n:8,t:"Tu sueño es tu sanador invisible",s:"Dormir mal no es normal a ninguna edad",ts:1984,m:"33:04",
+  idea:["Durante el sueño se repara el músculo, se consolida la memoria, se limpian desechos del cerebro y se regulan hormonas y defensas.","El vídeo afirma que una sola mala noche ya empeora la respuesta a la insulina.","Las causas habituales (menos melatonina, dolor, medicación, ir al baño, apnea) tienen arreglo."],
+  acc:["Mismo horario para acostarte y levantarte, también el fin de semana","Dormitorio fresco (16–19 °C), oscuro y silencioso; sin pantallas la última hora","Nada de cafeína después de mediodía y alcohol con moderación","Una hora antes de dormir, luz tenue y calma; si te levantas de noche, luz roja y suave"],
+  warn:"Si roncas fuerte o alguien nota que dejas de respirar al dormir, consúltalo con tu médico: puede ser apnea del sueño, y tiene tratamiento."},
+ {n:9,t:"Tu nutrición es tu farmacia interna",s:"Comida real, menos azúcar y harinas",ts:2316,m:"38:36",
+  idea:["Cada comida manda señales al cuerpo: inflamar o reparar.","Pan y arroz blancos, dulces, refrescos y zumos disparan el azúcar en sangre. Pueden estar, pero no ser la base.","Con la edad se absorbe peor la vitamina B12 (su falta puede imitar una demencia y es reversible), el hierro y el calcio."],
+  acc:["Medio plato de verdura y proteína en cada comida","Grasas buenas: aceite de oliva, aguacate, nueces y pescado azul 2–3 veces por semana","Pedir al médico un análisis de vitamina D y B12 antes de suplementar","Comer despacio, masticar bien y dejar al menos 12 h entre cena y desayuno, sin pasar hambre"]},
+ {n:10,t:"Tu propósito es tu razón para levantarte",s:"El que da sentido a los otros nueve",ts:2612,m:"43:32",
+  idea:["Según el vídeo, quien tiene un propósito claro vive más y mejor.","El propósito es lo que hace fácil moverse, comer bien o dormir: le da un porqué.","No tiene que ser grandioso, y no se encuentra: se decide."],
+  acc:["Escribir en una frase qué va a dar sentido a tus días (transmitir lo que sabes, crear, unir a los tuyos, servir a otros)","Empezar cada mañana con una intención clara","Por la noche, repasar si el día tuvo sentido"]}
+];
+const EVAL=[
+ {k:"suelo",q:"¿Puedes levantarte del suelo sin ayuda?",type:"sel",o:["Sí, sin apoyos","Con apoyo de una mano o mueble","Me cuesta mucho","No puedo"]},
+ {k:"caminar",q:"¿Cuántos minutos caminas sin cansarte?",type:"num",u:"min"},
+ {k:"prote",q:"¿Cuántas veces por semana comes proteína de calidad?",type:"num",u:"veces"},
+ {k:"sueno",q:"¿Cuántas horas duermes de media?",type:"num",u:"h"},
+ {k:"equil",q:"¿Cómo está tu equilibrio?",type:"sel",o:["Estable","Algo inseguro","Inseguro"]},
+ {k:"ilusion",q:"¿Tienes algo que te ilusione hacer cada día? ¿Qué?",type:"txt"}
+];
+
+const KEY="fuerte60-v1";
+const blank=()=>({acc:{},dias:{},eval:{},batalla:"",peso:""});
+let S=blank();
+try{const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(blank(),JSON.parse(raw));}catch(e){}
+const $=id=>document.getElementById(id);
+const hoyK=()=>new Date().toLocaleDateString("sv");
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast("No se ha podido guardar")}}
+function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+
+/* navegación */
+const VIEWS=["hoy","pilares","empezar","proteina","mas"];
+function route(){
+  const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):"hoy";
+  VIEWS.forEach(x=>{$("v-"+x).hidden=x!==v});
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===v?"page":"false"));
+  if(v==="hoy") renderDaily();
+  window.scrollTo(0,0);
+}
+addEventListener("hashchange",route);
+
+/* hoy */
+function renderDaily(){
+  const k=hoyK(), d=S.dias[k]||{};
+  $("fecha").textContent=new Date().toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"short"});
+  const ul=$("daily"); ul.innerHTML="";
+  DAILY.forEach(it=>{
+    const li=document.createElement("li");
+    li.innerHTML=`<label class="chk" for="d-${it.k}"><input type="checkbox" id="d-${it.k}"><span><b></b><small></small></span></label>`;
+    li.querySelector("b").textContent=it.t; li.querySelector("small").textContent=it.s;
+    const cb=li.querySelector("input"); cb.checked=!!d[it.k];
+    cb.addEventListener("change",()=>{const day=S.dias[k]||(S.dias[k]={}); if(cb.checked) day[it.k]=true; else delete day[it.k]; save(); renderWeek()});
+    ul.appendChild(li);
+  });
+  renderWeek();
+}
+function countDay(k){return Object.keys(S.dias[k]||{}).filter(x=>DAILY.some(d=>d.k===x)).length}
+function renderWeek(){
+  const w=$("week"); w.innerHTML=""; const n=DAILY.length, counts=[];
+  for(let i=6;i>=0;i--){
+    const dt=new Date(); dt.setDate(dt.getDate()-i);
+    const c=countDay(dt.toLocaleDateString("sv")); counts.push(c);
+    const el=document.createElement("div"); el.className="day"+(i===0?" is-today":"");
+    el.innerHTML=`<div class="bar"><i style="height:${Math.round(c/n*100)}%"></i></div><span>${dt.toLocaleDateString("es-ES",{weekday:"narrow"})}</span>`;
+    w.appendChild(el);
+  }
+  const c=counts[6]; $("ring-t").textContent=c+"/"+n;
+  $("ring").setAttribute("stroke-dashoffset",(201.06*(1-c/n)).toFixed(2));
+  let st=0; const today=new Date();
+  for(let i=0;i<365;i++){const dt=new Date(today);dt.setDate(today.getDate()-i);const x=countDay(dt.toLocaleDateString("sv"));if(x>=3)st++;else if(i===0)continue;else break}
+  $("streak").textContent= st? `Racha: ${st} día${st>1?"s":""} seguidos con 3 o más hábitos.` : "La racha cuenta los días seguidos con 3 o más hábitos.";
+}
+
+/* empezar */
+function renderEval(){
+  const g=$("eval"); g.innerHTML="";
+  EVAL.forEach(e=>{
+    const lab=document.createElement("label"); lab.setAttribute("for","e-"+e.k);
+    const q=document.createElement("span"); q.className="q"; q.textContent=e.q; lab.appendChild(q);
+    let inp;
+    if(e.type==="sel"){inp=document.createElement("select");inp.innerHTML='<option value="">— Elige —</option>';e.o.forEach(o=>{const op=document.createElement("option");op.value=o;op.textContent=o;inp.appendChild(op)})}
+    else if(e.type==="num"){inp=document.createElement("input");inp.type="number";inp.min="0";inp.step="any";inp.inputMode="decimal"}
+    else{inp=document.createElement("textarea");inp.rows=2}
+    inp.id="e-"+e.k; inp.value=S.eval[e.k]||"";
+    const row=document.createElement("span"); row.style.cssText="display:flex;gap:8px;align-items:center;min-width:0";
+    row.appendChild(inp); if(e.u){const u=document.createElement("span");u.className="muted";u.textContent=e.u;row.appendChild(u)}
+    lab.appendChild(row);
+    inp.addEventListener(e.type==="sel"?"change":"input",()=>{S.eval[e.k]=inp.value;if(!S.evalFecha)S.evalFecha=hoyK();save();evalDate()});
+    g.appendChild(lab);
+  });
+  evalDate();
+}
+function evalDate(){$("eval-date").textContent=S.evalFecha?"Foto de partida del "+new Date(S.evalFecha+"T12:00").toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"})+". Repásala dentro de 6 meses.":"Se guarda la fecha en que empiezas a rellenarla."}
+function renderBattle(){
+  const s=$("battle-sel");
+  if(s.options.length===1) P.forEach(p=>{const o=document.createElement("option");o.value=String(p.n);o.textContent=p.n+". "+p.t;s.appendChild(o)});
+  s.value=S.batalla||"";
+  $("battle-hint").textContent=S.batalla?"Este mes, solo esta. Aparece marcada en ámbar en Pilares.":"Al elegirla, aparece marcada en ámbar en Pilares.";
+}
+$("battle-sel").addEventListener("change",e=>{S.batalla=e.target.value;save();renderBattle();renderPillars()});
+
+/* proteína */
+function renderProt(){
+  $("peso").value=S.peso||"";
+  const w=parseFloat(String(S.peso).replace(",","."));
+  if(!w||w<35||w>200){["p-dia","p-4","p-3"].forEach(i=>$(i).textContent="—");return}
+  const lo=Math.round(w*1.2),hi=Math.round(w*1.6);
+  $("p-dia").textContent=`${lo}–${hi} g`;$("p-4").textContent=`${Math.round(lo/4)}–${Math.round(hi/4)} g`;$("p-3").textContent=`${Math.round(lo/3)}–${Math.round(hi/3)} g`;
+}
+$("peso").addEventListener("input",e=>{S.peso=e.target.value;save();renderProt()});
+
+/* pilares */
+const openSet=new Set();
+function renderPillars(){
+  const box=$("pillars");
+  box.querySelectorAll("details").forEach(d=>{if(d.open)openSet.add(d.dataset.n);else openSet.delete(d.dataset.n)});
+  box.innerHTML="";
+  P.forEach(p=>{
+    const done=p.acc.filter((_,i)=>S.acc[p.n+"-"+i]).length, isB=S.batalla===String(p.n);
+    const d=document.createElement("details"); d.className="pil"+(isB?" is-battle":""); d.dataset.n=p.n; if(openSet.has(String(p.n)))d.open=true;
+    d.innerHTML=`<summary><span class="num"></span><span class="sum-t"><h3></h3><small></small></span><span class="prog"></span></summary>
+      <div class="pil-body"><ul class="idea"></ul><div><span class="eyebrow">Qué hacer</span><ul class="checks"></ul></div><p class="warn" hidden></p><a class="btn ghost" target="_blank" rel="noopener"></a></div>`;
+    d.querySelector(".num").textContent=p.n;
+    const h=d.querySelector("h3");h.textContent=p.t;if(isB){const t=document.createElement("span");t.className="tag";t.textContent="Tu batalla";h.appendChild(t)}
+    d.querySelector("small").textContent=p.s;
+    const prog=d.querySelector(".prog");prog.textContent=`${done}/${p.acc.length}`;
+    const ul=d.querySelector(".idea");p.idea.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
+    const cl=d.querySelector(".checks");
+    p.acc.forEach((t,i)=>{
+      const id=`a-${p.n}-${i}`,li=document.createElement("li");
+      li.innerHTML=`<label class="chk" for="${id}"><input type="checkbox" id="${id}"><span><b></b></span></label>`;
+      li.querySelector("b").textContent=t;
+      const cb=li.querySelector("input");cb.checked=!!S.acc[p.n+"-"+i];
+      cb.addEventListener("change",()=>{if(cb.checked)S.acc[p.n+"-"+i]=true;else delete S.acc[p.n+"-"+i];save();prog.textContent=`${p.acc.filter((_,j)=>S.acc[p.n+"-"+j]).length}/${p.acc.length}`});
+      cl.appendChild(li);
+    });
+    if(p.warn){const w=d.querySelector(".warn");w.hidden=false;w.textContent=p.warn}
+    const a=d.querySelector("a.btn");a.href=VID+p.ts+"s";a.textContent=`Escuchar desde el minuto ${p.m}`;
+    box.appendChild(d);
+  });
+}
+
+/* copia de seguridad */
+$("exp").addEventListener("click",async()=>{
+  const name=`fuerte60-copia-${hoyK()}.json`;
+  const blob=new Blob([JSON.stringify(S,null,1)],{type:"application/json"});
+  const file=new File([blob],name,{type:"application/json"});
+  try{ if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"Copia Fuerte 60"});return} }catch(e){if(e.name==="AbortError")return}
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast("Copia guardada");
+});
+$("imp").addEventListener("change",async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  try{const d=JSON.parse(await f.text()); if(typeof d!=="object"||!d.dias) throw 0; S=Object.assign(blank(),d); save(); renderAll(); toast("Copia restaurada")}
+  catch(err){toast("Ese archivo no es una copia de Fuerte 60")}
+  e.target.value="";
+});
+
+function renderAll(){renderDaily();renderEval();renderBattle();renderProt();renderPillars()}
+$("ver").textContent="Versión "+VERSION;
+renderAll(); route();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden) renderDaily()});
+
+if("serviceWorker" in navigator){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+</script>
+</body>
+</html>
